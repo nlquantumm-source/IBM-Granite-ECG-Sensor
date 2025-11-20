@@ -33,32 +33,27 @@
     <tr>
       <td><strong>Additive White Gaussian Noise (AWGN)</strong></td>
       <td>Thermal noise, quantization error, amplifier noise</td>
-      <td><img style="vertical-align:middle;" src="https://latex.codecogs.com/svg.latex?\color{white}\Large%20n_{\text{AWGN}}(t)%20=%20\sigma_g%20\cdot%20w(t),\quad%20w(t)\sim\mathcal{N}(0,1)" alt="AWGN" /><br>
-        <img style="vertical-align:middle;" src="https://latex.codecogs.com/svg.latex?\color{white}\Large%20\sigma_g%20=%20\sqrt{\frac{P_s}{10^{\text{SNR}_{\text{dB}}/10}}}" alt="SNR formula" /></td>
+      <td><img style="vertical-align:middle;" src="https://latex.codecogs.com/svg.latex?\dpi{200}\color{white}n_{\text{AWGN}}(t)%20=%20\sigma_g%20\cdot%20w(t),\quad%20w(t)\sim\mathcal{N}(0,1)" alt="AWGN1" /><br><img style="vertical-align:middle;" src="https://latex.codecogs.com/svg.latex?\dpi{200}\color{white}\sigma_g%20=%20\sqrt{\frac{P_s}{10^{\text{SNR[dB]}/10}}}" alt="AWGN2" /></td>
     </tr>
     <tr>
       <td><strong>Baseline Wander (BW)</strong></td>
       <td>Respiration, body movement, electrode drift</td>
-      <td><img style="vertical-align:middle;" src="https://latex.codecogs.com/svg.latex?\color{white}\Large%20n_{\text{BW}}(t)%20=%20A_{\text{bw}}\sin(2\pi%20f_{\text{resp}}%20t)" alt="BW" /><br>
-        <small style="color:#aaaaaa;">or multi-harmonic respiration model</small></td>
+      <td><img style="vertical-align:middle;" src="https://latex.codecogs.com/svg.latex?\dpi{200}\color{white}n_{\text{BW}}(t)%20=%20A_{\text{bw}}\sin(2\pi%20f_{\text{resp}}%20t)%20\quad\text{or multi-harmonic}" alt="BW" /><br><img style="vertical-align:middle;" src="https://latex.codecogs.com/svg.latex?\dpi{200}\color{white}\sum_{k=1}^{3}b_k\sin(2\pi%20k%20f_{\text{resp}}%20t%20+%20\phi_k)" alt="BW multi" /></td>
     </tr>
     <tr>
       <td><strong>Powerline Interference (PLI)</strong></td>
       <td>50/60 Hz electromagnetic coupling</td>
-      <td><img style="vertical-align:middle;" src="https://latex.codecogs.com/svg.latex?\color{white}\Large%20n_{\text{PL}}(t)=A_{\text{pl}}\sum_{k=1}^{H}c_k\sin(2\pi%20k%20f_{\text{pl}}%20t}%20+%20\phi_k)" alt="PLI" /></td>
+      <td><img style="vertical-align:middle;" src="https://latex.codecogs.com/svg.latex?\dpi{200}\color{white}n_{\text{PL}}(t)=A_{\text{pl}}\sum_{k=1}^{H}c_k\sin(2\pi%20k%20f_{\text{pl}}%20t%20+%20\phi_k)" alt="PLI" /></td>
     </tr>
     <tr>
       <td><strong>Muscle Artifact (MA/EMG)</strong></td>
       <td>Skeletal muscle contraction, tremor, shivering</td>
-      <td><img style="vertical-align:middle;" src="https://latex.codecogs.com/svg.latex?\color{white}\Large%20n_{\text{MA}}(t)%20=%20\sigma_{\text{ma}}(t)\cdot%20g(t)" alt="MA" /><br>
-        <img style="vertical-align:middle;" src="https://latex.codecogs.com/svg.latex?\color{white}\Large%20g(t):\%20\text{BPF\%2020-500\%20Hz\%20Gaussian}" alt="g(t)" /><br>
-        <img style="vertical-align:middle;" src="https://latex.codecogs.com/svg.latex?\color{white}\Large%20\sigma_{\text{ma}}(t):\%20\text{0.1-10\%20Hz\%20envelope}" alt="envelope" /></td>
+      <td>Gold standard: MIT-BIH NSTDB “ma” record (real recorded EMG)<br><br><strong>Synthetic model (most realistic & widely used):</strong><br><img style="vertical-align:middle;" src="https://latex.codecogs.com/svg.latex?\dpi{200}\color{white}n_{\text{MA}}(t)%20=%20\sigma_{\text{ma}}(t)\cdot%20g(t)" alt="MA" /><br><img style="vertical-align:middle;" src="https://latex.codecogs.com/svg.latex?\dpi{200}\color{white}g(t):%20\text{band-pass 20-500 Hz Gaussian noise}" alt="g(t)" /><br><img style="vertical-align:middle;" src="https://latex.codecogs.com/svg.latex?\dpi{200}\color{white}\sigma_{\text{ma}}(t):%20\text{low-freq envelope (0.1-10 Hz)}" alt="envelope" /></td>
     </tr>
     <tr>
       <td><strong>Electrode Motion Artifact (EM)</strong></td>
       <td>Skin stretching, loose contact, cable movement</td>
-      <td><img style="vertical-align:middle;" src="https://latex.codecogs.com/svg.latex?\color{white}\Large%20n_{\text{EM}}(t)%20=%20\sum_i%20A_i%20\left(e^{-(t-t_i)/\tau_1}%20-%20e^{-(t-t_i)/\tau_2}\right)" alt="EM" /><br>
-        <img style="vertical-align:middle;" src="https://latex.codecogs.com/svg.latex?\color{white}\Large%20\tau_1%20\gg%20\tau_2%20\text{%20(sharp%20rise%20+%20slow%20decay)}" alt="tau" /></td>
+      <td>Gold standard: MIT-BIH NSTDB “em” record (real recording)<br><br><strong>Synthetic model (biphasic exponential pulse train):</strong><br><img style="vertical-align:middle;" src="https://latex.codecogs.com/svg.latex?\dpi{200}\color{white}n_{\text{EM}}(t)%20=%20\sum_i%20A_i%20\left(e^{-(t-t_i)/\tau_1}%20-%20e^{-(t-t_i)/\tau_2}\right)" alt="EM" /><br><img style="vertical-align:middle;" src="https://latex.codecogs.com/svg.latex?\dpi{200}\color{white}\tau_1%20\gg%20\tau_2%20\text{ (sharp rise + slow decay)}" alt="tau" /></td>
     </tr>
   </tbody>
 </table>
