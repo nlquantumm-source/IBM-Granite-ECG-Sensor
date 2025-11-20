@@ -12,16 +12,16 @@
 * TSPulse is one of the best AI model for this use-case because it is pretrained with *dual-space masked recontruction* (time + frequency domains), making it naturally strong at imputation and Synthetic noise addition especially on physiological signals.<br />
 * Use the *hybrid-dualhead-512-p8-r1* variant for imputation/denoising. It excels at zero-shot reconstruction and works perfectly with fine-tuning.<br /><br />
   
-# Software Use-case
+## Software Use-case
 * Use *Google Colab* when training AI model (Compatibility for majority of the embedding engineers out there).<br />
 * Real-time Arduino integration: 512-1024 samples and send data via Serial/WiFi.<br /><br />
 
-# Synthetic Noise Application
+## Synthetic Noise Application
 * *Gaussian white noise* (for powerline/thermal interference).<br />
 * *Baseline Wander* (low-frequency drift via sine square waves).<br />
 * *EMG/muscle artifacts* (high-frequency modulated Gaussian) to train the TSPulse model on noisy-clean ECG pairs.<br /><br /><br />
 
-# Algorithm & Mathematical Equation Use-case<br />
+## Algorithm & Mathematical Equation Use-case<br />
 <table>
   <thead>
     <tr>
@@ -34,37 +34,27 @@
     <tr>
       <td><strong>Additive White Gaussian Noise (AWGN)</strong></td>
       <td>Thermal noise, quantization error, amplifier noise</td>
-      <td><img src="https://latex.codecogs.com/svg.latex?\large%20n_{\text{AWGN}}(t)%20=%20\sigma_g%20\cdot%20w(t),\;%20w(t)\sim\mathcal{N}(0,1)" 
-           alt="AWGN model" 
-           title="Additive White Gaussian Noise"></td>
+      <td><img style="vertical-align: middle;" src="https://latex.codecogs.com/svg.latex?%5Cbg_white%20%5Clarge%20n_{\text{AWGN}}(t)%20%3D%20%5Csigma_g%20%5Ccdot%20w(t)%2C%20w(t)%5Csim%5Cmathcal{N}(0%2C1)" alt="Additive White Gaussian Noise model"></td>
     </tr>
     <tr>
       <td><strong>Baseline Wander (BW)</strong></td>
       <td>Respiration, body movement, electrode drift</td>
-      <td><img src="https://latex.codecogs.com/svg.latex?\large%20n_{\text{BW}}(t)%20=%20A_{\text{bw}}\sin(2\pi%20f_{\text{resp}}t)%20\text{or}%20\sum_{k=1}^{3}b_k\sin(2\pi%20k%20f_{\text{resp}}t%20+%20\phi_k)" 
-           alt="Baseline Wander model" 
-           title="Baseline Wander"></td>
+      <td><img style="vertical-align: middle;" src="https://latex.codecogs.com/svg.latex?%5Cbg_white%20%5Clarge%20n_{\text{BW}}(t)%20%3D%20A_{\text{bw}}%5Csin(2%5Cpi%20f_{\text{resp}}%20t)%20%5Ctext{ or }%20%5Csum_{k=1}^{3}b_k%5Csin(2%5Cpi%20k%20f_{\text{resp}}%20t + %5Cphi_k)" alt="Baseline Wander model"></td>
     </tr>
     <tr>
-      <td><strong>Powerline Interference (PLI)</strong></td>
+      <td><strong>Powerline Interference (PLI)</strong></strong></td>
       <td>50/60 Hz electromagnetic coupling</td>
-      <td><img src="https://latex.codecogs.com/svg.latex?\large%20n_{\text{PL}}(t)%20=%20A_{\text{pl}}\sum_{k=1}^{H}c_k\sin(2\pi%20k%20f_{\text{pl}}t%20+%20\phi_k)" 
-           alt="Powerline Interference model" 
-           title="Powerline Interference"></td>
+      <td><img style="vertical-align: middle;" src="https://latex.codecogs.com/svg.latex?%5Cbg_white%20%5Clarge%20n_PL(t)=A_pl%5Csum_{k=1}^{H}c_k%5Csin(2%5Cpi%20k%20f_pl%20t+%20%5Cphi_k)" alt="Powerline Interference model"></td>
     </tr>
     <tr>
       <td><strong>Muscle Artifact (MA/EMG)</strong></td>
       <td>Skeletal muscle contraction, tremor, shivering</td>
-      <td><img src="https://latex.codecogs.com/svg.latex?\large%20n_{\text{MA}}(t)%20=%20\sigma_{\text{ma}}\cdot%20g(t)\cdot|1%20+%20m(t)|,\;%20g(t)\text{: HPF}>15\text{Hz},\;m(t)\text{: 2--12 Hz envelope}" 
-           alt="Muscle Artifact model" 
-           title="Muscle Artifact"></td>
+      <td><img style="vertical-align: middle;" src="https://latex.codecogs.com/svg.latex?%5Cbg_white%20%5Clarge%20n_{\text{MA}}(t)%20%3D%20%5Csigma_{\text{ma}}%20%5Ccdot%20g(t)%5Ccdot|1 + m(t)|%2C%20%5Ctext{ g(t): HPF >15Hz%2C m(t): 2-12 Hz envelope}" alt="Muscle Artifact model"></td>
     </tr>
     <tr>
       <td><strong>Electrode Motion Artifact (EM)</strong></td>
       <td>Skin stretching, loose contact, cable movement</td>
-      <td><img src="https://latex.codecogs.com/svg.latex?\large%20\text{MIT-BIH NSTDB ``em'' record (real recording, no reliable synthetic model)}" 
-           alt="Electrode Motion Artifact" 
-           title="Electrode Motion Artifact"></td>
+      <td><img style="vertical-align: middle;" src="https://latex.codecogs.com/svg.latex?%5Cbg_white%20%5Clarge%20%5Ctext{MIT-BIH NSTDB ``em'' record (real recording, no reliable synthetic model)}" alt="Electrode Motion Artifact model"></td>
     </tr>
   </tbody>
 </table>
