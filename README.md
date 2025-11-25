@@ -16,21 +16,11 @@
 * *Dropout (Regularization)*: Acts as a stochastic "filter" during training to prevent overfitting by randomly dropping units (implicit noise injection).<br /><br />
 
 ## Algorithm & Mathematical Equations<br />
-Algorithm,Mathematical Equation,Purpose/Context in Script
-Polyphase Resampling,"L′=L×fsL' = L \times f_sL′=L×fs​; Reconstruction via sinc interpolation:
-x(t)=∑nx[n]⋅sinc⁡(t−nT)x(t) = \sum_n x[n] \cdot \operatorname{sinc}(t - nT)x(t)=∑n​x[n]⋅sinc(t−nT).","Downsamples ECG signals from 360 Hz to 250 Hz while preserving annotation timings;
-Used in MIT-BIH loading (Cell 2)."
-Min-Max Normalization,"x′=x−min⁡(x)max⁡(x)−min⁡(x)+ϵx' = \frac{x - \min(x)}{\max(x) - \min(x) + \epsilon}x′=max(x)−min(x)+ϵx−min(x)​, where ϵ=10−8\epsilon = 10^{-8}ϵ=10−8.","Scales filtered ECG segments to [0,1] range per window;
-Prepares data for int8 quantization and stable training (Cell 3)."
-Binary Focal Loss,"FL(pt)=−αt(1−pt)γlog⁡(pt)FL(p_t) = -\alpha_t (1 - p_t)^\gamma \log(p_t)FL(pt​)=−αt​(1−pt​)γlog(pt​) where pt=y⋅p+(1−y)(1−p)p_t = y \cdot p + (1 - y)(1 - p)pt​=y⋅p+(1−y)(1−p), αt=α\alpha_t = \alphaαt​=α (if y=1y=1y=1) or $1 - \alpha$;
-Defaults: α=0.25\alpha=0.25α=0.25, γ=2.0\gamma=2.0γ=2.0.","Handles class imbalance in arrhythmia detection (fewer abnormal beats);
-Used as training loss for the CNN (Cell 4)."
-1D Convolution (in ReTinyCES CNN),"(x∗w)[n]=∑mx[n−m]⋅w[m]+b(x * w)[n] = \sum_m x[n - m] \cdot w[m] + b(x∗w)[n]=∑m​x[n−m]⋅w[m]+b;
-Followed by ReLU: f(z)=max⁡(0,z)f(z) = \max(0, z)f(z)=max(0,z).","Extracts temporal features from ECG windows;
-Layers: 16 filters (kernel=8), 32 filters (kernel=5) (Cell 4)."
-Sigmoid Activation (Output),σ(z)=11+e−z\sigma(z) = \frac{1}{1+e^{-z}}σ(z)=1+e−z1​.,Produces binary probability (normal vs. abnormal) at the final dense layer (Cell 4).
-Butterworth Filter Design,"Transfer Function (low-pass prototype): H(s)=ωc2s2+2ωcs+ωc2H(s) = \frac{\omega_c^2}{s^2 + \sqrt{2} \omega_c s + \omega_c^2}H(s)=s2+2​ωc​s+ωc2​ωc2​​.
-Cascaded for bandpass; Digital:
-y[n]=∑kbkx[n−k]−∑kaky[n−k]y[n] = \sum_k b_k x[n - k] - \sum_k a_k y[n - k]y[n]=∑k​bk​x[n−k]−∑k​ak​y[n−k].","Designs coefficients for bandpass filtering (0.5-40 Hz); Normalized frequencies:
-fnorm=f/(fs/2)f_{\text{norm}} = f / (f_s / 2)fnorm​=f/(fs​/2) (Cell 3)."
-''',,
+| Algorithm | Mathematical Equation | Purpose/Context in Script |
+| :--- | :--- | :--- |
+| **Polyphase Resampling** | $L' = L \times \frac{f'_s}{f_s}$<br>Reconstruction via sinc interpolation:<br>$x(t) = \sum_{n} x[n] \cdot \text{sinc}(t - nT)$ | Downsamples ECG signals from 360 Hz to 250 Hz while preserving annotation timings;<br>Used in MIT-BIH loading (Cell 2). |
+| **Min-Max Normalization** | $x' = \frac{x-\min(x)}{\max(x)-\min(x)+\epsilon}$<br>where $\epsilon = 10^{-8}$ | Scales filtered ECG segments to [0,1] range per window;<br>Prepares data for int8 quantization and stable training (Cell 3). |
+| **Binary Focal Loss** | $FL(p_t) = -\alpha_t(1 - p_t)^\gamma \log(p_t)$<br>where $p_t = y \cdot p + (1 - y)(1 - p)$<br>$\alpha_t = \alpha \text{ (if } y=1) \text{ or } 1 - \alpha$;<br>Defaults: $\alpha=0.25, \gamma=2.0$ | Handles class imbalance in arrhythmia detection (fewer abnormal beats);<br>Used as training loss for the CNN (Cell 4). |
+| **1D Convolution (in ReTinyCES CNN)** | $(x * w)[n] = \sum_{m} x[n - m] \cdot w[m] + b$<br>Followed by ReLU:<br>$f(z) = \max(0, z)$ | Extracts temporal features from ECG windows;<br>Layers: 16 filters (kernel=8), 32 filters (kernel=5) (Cell 4). |
+| **Sigmoid Activation (Output)** | $\sigma(z) = \frac{1}{1+e^{-z}}$ | Produces binary probability (normal vs. abnormal) at the final dense layer (Cell 4). |
+| **Butterworth IIR Filter Design** | Transfer Function (low-pass prototype):<br>$H(s) = \frac{\omega_c^2}{s^2+\sqrt{2}\omega_c s+\omega_c^2}$<br>Cascaded for bandpass; Digital:<br>$y[n] = \sum_k b_k x[n - k] - \sum_k a_k y[n - k]$ | Designs coefficients for bandpass filtering (0.5–40 Hz);<br>Normalized frequencies: $f_{norm} = f / (f_s / 2)$ (Cell 3). |
